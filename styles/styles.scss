@@ -1,0 +1,15 @@
+// libs
+@import './swiper.scss';
+@import './slick.scss';
+
+//variables
+@import './base/variables.scss';
+
+//base
+@import './base/reset.scss';
+@import './base/base.scss';
+@import './base/typography';
+
+
+// sections
+@import './sections/program-slider';

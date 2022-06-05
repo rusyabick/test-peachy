@@ -1,0 +1,160 @@
+<div class="p-slider">
+    <div class="p-slider__left">
+        <h1 class="p-slider__title">
+            {{ section.settings.title }}
+        </h1>
+        <p class="p-slider__text">
+            {{ section.settings.description }}
+        </p>
+        <div class="p-slider__labels">
+            {% for block in section.blocks %}
+                {% assign color = block.settings.color %}
+                <div class="p-slider__label{% if forloop.first %} active{% endif %}"
+                     data-color="{{ color }}"
+                     data-index="{{ forloop.index0 }}"
+                     style="background-color: {{ color | color_modify: 'alpha', 0.15 }}">
+                    <div class="p-slider__label-icon" style="background-color: {{ color }}">
+                        <img src="{{ block.settings.icon | img_url: '25x' }}" alt="">
+                    </div>
+                    <span>{{ block.settings.label }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="p-slider__right">
+        <div class="p-slider__bg">
+            <svg preserveAspectRatio="none" viewBox="0 0 375 508" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M356.4 0.000500071L375 0.000689019L375 508L246.203 508C199.961 508 158.316 480.02 140.839 437.209C127.963 405.671 84.447 402.74 67.4594 432.267L35.8009 487.294C28.431 500.104 14.7786 508 8.31219e-06 508L3.05175e-05 0.000672627L145.362 0.000875519C161.334 0.000897812 176.941 4.7818 190.172 13.728L256.143 58.3337C268.653 66.7923 285.782 61.0809 290.712 46.807C300.388 18.7945 326.764 0.000199013 356.4 0.000500071Z" fill="{{ section.blocks[0].settings.color }}"/>
+            </svg>
+            <svg width="720" height="834" viewBox="0 0 720 834" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.000486289 76.059L0.000976562 0H720L720 373.891C720 424.305 690.853 470.173 645.212 491.584L508.435 555.749C475.386 571.252 472.055 616.956 502.507 637.087L675.682 751.574C703.354 769.868 720 800.827 720 834H0.000976562L0.00123247 537.003C0.00127685 485.489 21.4747 436.306 59.2556 401.286L229.289 243.681C244.969 229.147 237.807 202.978 216.911 198.455L73.7332 167.461C30.7053 158.147 0.000202509 120.084 0.000486289 76.059Z" fill="{{ section.blocks[0].settings.color }}"/>
+            </svg>
+        </div>
+        <div class="p-slider__list swiper">
+            <div class="swiper-wrapper">
+                {% for block in section.blocks %}
+                    <div class="p-slider__item-wrap swiper-slide" data-index="{{ forloop.index0 }}">
+                        <div class="p-slider__item">
+                            <h2 class="p-slider__item-title">
+                                <div class="p-slider__item-icon">
+                                    <img src="{{ block.settings.slide_icon | img_url: '50x' }}" alt="">
+                                </div>
+                                {{ block.settings.title }}
+                            </h2>
+                            <div class="p-slider__content">
+                                {{ block.settings.content }}
+                            </div>
+                            <a href="{{ block.settings.button_url }}" class="p-slider__btn">
+                                {{ block.settings.button_text }}
+                            </a>
+                            <div class="p-slider__footer">
+                                {{ block.settings.footer_text }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    {% for block in section.blocks %}
+    {% assign color = block.settings.color %}
+        .p-slider__item-wrap:nth-of-type({{ forloop.index }}) .p-slider__content strong:before {
+            background-color: {{ color | color_modify: 'alpha', 0.15 }};
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.36377 4.24163L3.78801 6.66587L8.6365 1.81738' stroke='%23{{ color | remove: '#' }}' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A")
+        }
+        .p-slider__item-wrap:nth-of-type({{ forloop.index }}) .p-slider__content em {
+            background-color: {{ color | color_modify: 'alpha', 0.15 }};
+        }
+    {% endfor %}
+    .p-slider__content em:after {
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='11' viewBox='0 0 12 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.5 5.49999C11.5 4.04126 10.9205 2.64238 9.88906 1.61091C8.85764 0.579487 7.45858 0 5.99999 0C4.5414 0 3.14238 0.579487 2.11091 1.61091C1.07949 2.64234 0.5 4.04139 0.5 5.49999C0.5 6.95858 1.07949 8.35759 2.11091 9.38906C3.14234 10.4205 4.5414 11 5.99999 11C6.96542 11 7.91389 10.7458 8.75 10.2631C9.58611 9.78039 10.2804 9.08606 10.7631 8.24997C11.2458 7.41386 11.5 6.46539 11.5 5.49997L11.5 5.49999ZM5.99997 10.0222C4.80059 10.0222 3.65024 9.54581 2.80232 8.69768C1.95421 7.84965 1.47778 6.69936 1.47778 5.50003C1.47778 4.3007 1.95419 3.15031 2.80232 2.30239C3.65035 1.45427 4.80064 0.977845 5.99997 0.977845C7.1993 0.977845 8.34969 1.45425 9.19761 2.30239C10.0457 3.15042 10.5222 4.3007 10.5222 5.50003C10.5208 6.69899 10.044 7.84845 9.19617 8.69637C8.34839 9.54429 7.19888 10.021 5.99984 10.0224L5.99997 10.0222Z' fill='%23CECECE'/%3E%3Cpath d='M6.00032 3.3981C6.1294 3.3981 6.2531 3.34677 6.34442 3.25555C6.43564 3.16433 6.48688 3.04054 6.48688 2.91145C6.48688 2.78237 6.43564 2.65858 6.34442 2.56735C6.25311 2.47613 6.1294 2.4248 6.00032 2.4248C5.87123 2.4248 5.74745 2.47613 5.65622 2.56735C5.56491 2.65857 5.51367 2.78237 5.51367 2.91145C5.51367 3.04053 5.56491 3.16432 5.65622 3.25555C5.74744 3.34677 5.87123 3.3981 6.00032 3.3981Z' fill='%23CECECE'/%3E%3Cpath d='M6.86125 7.85228C6.69287 7.79831 6.48705 7.63999 6.48705 7.18857V4.22467C6.48705 4.20344 6.47853 4.18307 6.46352 4.16806C6.44852 4.15297 6.42814 4.14453 6.40683 4.14453H5.22553C5.14564 4.14453 5.069 4.17625 5.01256 4.23277C4.95603 4.28921 4.92432 4.36586 4.92432 4.44565C4.92542 4.57848 5.01264 4.69529 5.13959 4.73408C5.30797 4.78805 5.51378 4.94637 5.51378 5.39779V7.18859C5.51378 7.64003 5.30798 7.79835 5.13959 7.8523C5.01264 7.89118 4.92551 8.00789 4.92432 8.14072C4.92432 8.22061 4.95603 8.29717 5.01256 8.35369C5.069 8.41013 5.14564 8.44185 5.22553 8.44185H6.77531C6.85519 8.44185 6.93184 8.41013 6.98827 8.35369C7.04471 8.29717 7.07651 8.22061 7.07651 8.14072C7.07532 8.0079 6.98819 7.89117 6.86124 7.8523L6.86125 7.85228Z' fill='%23CECECE'/%3E%3C/svg%3E%0A");
+    }
+</style>
+
+{% schema %}
+    {
+"name": "Program slider",
+"settings": [
+  {
+"type": "text",
+"id": "title",
+"label": "Title"
+  },
+{
+"type": "textarea",
+"id": "description",
+"label": "Description"
+}
+],
+"blocks": [
+{
+"type": "slide",
+"name": "Slide",
+"settings": [
+{
+"type": "color",
+"id": "color",
+"label": "Color"
+},
+{
+"type": "header",
+"content": "Thumbnail"
+},
+{
+"type": "text",
+"id": "label",
+"label": "Label"
+},
+{
+"type": "image_picker",
+"id": "icon",
+"label": "Icon"
+},
+{
+"type": "header",
+"content": "Slide content"
+},
+{
+"type": "image_picker",
+"id": "slide_icon",
+"label": "Icon"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title"
+},
+{
+"type": "richtext",
+"id": "content",
+"label": "Content"
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Button text"
+},
+{
+"type": "url",
+"id": "button_url",
+"label": "Button url"
+},
+{
+"type": "text",
+"id": "footer_text",
+"label": "Footer text"
+}
+]
+}
+],
+"presets": [
+  {
+"name": "Program slider"
+  }
+]
+}
+{% endschema %}
