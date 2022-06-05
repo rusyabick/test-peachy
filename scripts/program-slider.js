@@ -1,11 +1,14 @@
 $(document).ready(() => {
     function programSlider() {
-        let sliderLabels = '.p-slider__label'
+        let sliderLabels = '.p-slider__label';
 
         const swiper = new Swiper('.p-slider__list', {
             slidesPerView: 1,
             direction: 'vertical',
             autoHeight: true,
+            mousewheel: {
+                invert: false,
+            },
             breakpoints: {
                 992: {
                     slidesPerView: 'auto',

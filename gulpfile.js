@@ -50,7 +50,7 @@ const jsFiles = [
 ];
 
 gulp.task('js', () => {
-    return gulp.src('scripts/*.js')
+    return gulp.src(['scripts/vendors/*.js', 'scripts/*.js'])
         .pipe(babel({
             presets: ['@babel/preset-env']
         }))
